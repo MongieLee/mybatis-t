@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace指定命名空间，相当于包名，用来区分不同的mapper文件相同的id属性-->
+<mapper namespace="com.example.demo.mapper.StudentMapper">
+    <!--resultType指定返回值类型，相当于实体类，如果是集合必须是泛型的类型,全限定包名
+        parameterType如果有参数，需要通过它来指定参数的类型
+    -->
+    <select id="getAll" resultType="org.example.entity.Student">
+        select id, username, age, gender, created_at
+        from t_user;
+    </select>
+    <select id="getById" parameterType="int" resultType="org.example.entity.Student">
+        select id, username, age, gender, created_at
+        from t_user
+        where id = #{id};
+    </select>
+    <select id="getByLikeName" parameterType="string" resultType="org.example.entity.Student">
+        select id, username, age, gender, created_at
+        from t_user
+        where username like '%${username}%';
+    </select>
+    <insert id="insert" parameterType="org.example.entity.Student">
+        insert into t_user (username, age, gender, created_at)
+        values (#{username},#{age},#{gender},#{createdAt});
+-- 直接使用实体类都属性名
+    </insert>
+</mapper>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace指定命名空间，相当于包名，用来区分不同的mapper文件相同的id属性-->
+<mapper namespace="org.example.dao.MenuMapper">
+    <!--resultType指定返回值类型，相当于实体类，如果是集合必须是泛型的类型,全限定包名
+        parameterType如果有参数，需要通过它来指定参数的类型
+    -->
+    <select id="getAll" resultType="menu">
+        select id, namefrom t_menu;
+    </select>
+    <select id="getById" parameterType="int" resultType="menu">
+        select id, name
+        from t_menu
+        where id = #{id};
+    </select>
+    <select id="getByLikeName" parameterType="string" resultType="menu">
+        select id, name where name like '%${name}%';
+    </select>
+    <insert id="insert" parameterType="menu">
+        insert into t_menu (name,created_at)
+        values (#{name},#{createdAt})
+-- 直接使用实体类的属性名
+    </insert>
+    <update id="update" parameterType="menu">
+        update from t_menu
+        set name = #{name}
+        where id = #{id}
+    </update>
+    <delete id="delete" parameterType="int">
+        delete
+        from t_menu
+        where id = #{id};
+    </delete>
+</mapper>
